@@ -4,8 +4,8 @@
   "description": "Task management app; backend-focused",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
-    "test": "npx cypress run"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "keywords": [
     "express",
