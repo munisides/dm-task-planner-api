@@ -1,0 +1,133 @@
+openapi: 3.0.0
+info:
+  title: Task Planner API
+  contact: {}
+  version: '1.0'
+servers:
+  - url: https://task-planner-api.herokuapp.com/api/v1
+    variables: {}
+paths:
+  /tasks:
+    post:
+      tags:
+        - Tasks
+      summary: Create Task
+      operationId: CreateTask
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTaskRequest'
+            example:
+              title: research topic
+              completed: false
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    get:
+      tags:
+        - Tasks
+      summary: Get All Tasks
+      operationId: GetAllTasks
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /tasks/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The task ID
+    get:
+      tags:
+        - Tasks
+      summary: Get Single Task
+      operationId: GetSingleTask
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+
+    patch:
+      tags:
+        - Tasks
+      summary: Update Task
+      operationId: UpdateTask
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTaskRequest'
+            example:
+              company: random
+              position: intern
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - Tasks
+      summary: Delete Task
+      operationId: DeleteTask
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    CreateTaskRequest:
+      title: CreateTaskRequest
+      required:
+        - title
+        - completed
+      type: object
+      properties:
+        title:
+          type: string
+        completed:
+          type: boolean
+      example:
+        title: design
+        completed: false
+    UpdateJobRequest:
+      title: UpdateTaskRequest
+      required:
+        - title
+        - completed
+      type: object
+      properties:
+        title:
+          type: string
+        completed:
+          type: boolean
+      example:
+        title: test
+        completed: false
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+security:
+  - httpBearer: []
+tags:
+  - name: Tasks
+    description: ''
