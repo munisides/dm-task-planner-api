@@ -4,7 +4,7 @@ info:
   contact: {}
   version: '1.0'
 servers:
-  - url: 
+  - url: https://task-planner-api.herokuapp.com/api/v1
     variables: {}
 paths:
   /tasks:
