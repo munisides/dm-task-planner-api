@@ -11,6 +11,7 @@ const rateLimiter = require('express-rate-limit');
 
 //
 const app = express();
+app.use(express.static('./public'));
 app.use(express.json());
 
 // swagger docs
@@ -38,7 +39,7 @@ app.use(limiter);
 
 //
 app.get('/', (req, res)  => { 
-    res.json('< h1 >TASK PLANNER API</h1 > <a href="/api-docs">Documentation</a>');
+    res.render('/index.html');
 });
 //swagger
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
