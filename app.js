@@ -11,7 +11,7 @@ const rateLimiter = require('express-rate-limit');
 
 //
 const app = express();
-app.use(express.static('./public'));
+app.use(express.static('public'));
 app.use(express.json());
 
 // swagger docs
@@ -47,10 +47,14 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 // routes
 app.use('/api/v1/tasks', tasks);
 
+app.all('*', (req, res) => {
+    res.status(404).send('Route does not exist');
+});
+
 app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
-    if (!err.message) err.message = 'Oh no, something wet wrong!'
-    res.status(statusCode).render('error', { err })
+      if (!err.message) err.message = 'Oh no, something went wrong!';
+      res.status(statusCode).send('Oh no, something went wrong!');
 });
 
 const dbUrl = process.env.MONGO_URI;
