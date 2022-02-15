@@ -11,6 +11,7 @@ const rateLimiter = require('express-rate-limit');
 
 //
 const app = express();
+app.use(express.static('public'));
 app.use(express.json());
 
 // swagger docs
@@ -38,7 +39,7 @@ app.use(limiter);
 
 //
 app.get('/', (req, res)  => { 
-    res.json('< h1 >TASK PLANNER API</h1 > <a href="/api-docs">Documentation</a>');
+    res.render('/index.html');
 });
 //swagger
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
@@ -46,17 +47,21 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 // routes
 app.use('/api/v1/tasks', tasks);
 
+app.all('*', (req, res) => {
+    res.status(404).send('Route does not exist');
+});
+
 app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
-    if (!err.message) err.message = 'Oh no, something wet wrong!'
-    res.status(statusCode).render('error', { err })
+      if (!err.message) err.message = 'Oh no, something went wrong!';
+      res.status(statusCode).send('Oh no, something went wrong!');
 });
 
 const dbUrl = process.env.MONGO_URI;
 mongoose.connect(dbUrl);
 
 const db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
+db.on("error", console.error.bind(console, "connection error: "));
 db.once("open", () => {
     console.log("Database connected");
 });
