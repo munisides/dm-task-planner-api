@@ -38,9 +38,10 @@ const limiter = rateLimiter({
 app.use(limiter);
 
 //
-app.get('/', (req, res)  => { 
-    res.render('/index.html');
-});
+// app.get('/', (req, res)  => { 
+//     res.render('/index.html');
+// });
+app.use(express.static('./public'));
 //swagger
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
@@ -57,7 +58,8 @@ app.use((err, req, res, next) => {
       res.status(statusCode).send('Oh no, something went wrong!');
 });
 
-const dbUrl = process.env.MONGO_URI;
+// const dbUrl = process.env.MONGO_URI;
+const dbUrl = 'mongodb://localhost:27017/dm-task-planner-api';
 mongoose.connect(dbUrl);
 
 const db = mongoose.connection;
