@@ -6,7 +6,7 @@ class CustomTaskError extends Error {
 }
 
 const createTaskError = (msg, statusCode) => {
-return new CustomTaskError(msg, statusCode);
+  return new CustomTaskError(msg, statusCode);
 }
   
 module.exports = { createTaskError, CustomTaskError }

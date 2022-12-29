@@ -23,8 +23,7 @@ const getTask = async (req, res) => {
 }
 
 const createTask = async (req, res) => {
-    const { id: taskID } = req.body;
-    const task = await Task.create({ taskID });
+    const task = await Task.create(req.body);
     if(!task) {
         res.status(404);
         return next(`Error creating task. Please try again`)
