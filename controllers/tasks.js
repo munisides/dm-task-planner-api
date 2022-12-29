@@ -15,7 +15,9 @@ const getTask = async (req, res) => {
     const { id: taskID } = req.params;
     const task = await Task.findOne({ _id: taskID });
     if(!taskID) {
-        return next(createTaskError(`No task with ID: ${taskID}`, 404));
+        res.status(404);
+        return next(`No task with ID: ${taskID}`)
+        // return next(createTaskError(`No task with ID: ${taskID}`, 404));
     }
     res.status(200).json({ task });
 }
@@ -24,7 +26,9 @@ const createTask = async (req, res) => {
     const { id: taskID } = req.body;
     const task = await Task.create({ taskID });
     if(!task) {
-        return next(createTaskError(`Error creating task. Please try again`, 404));
+        res.status(404);
+        return next(`Error creating task. Please try again`)
+        // return next(createTaskError(`Error creating task. Please try again`, 404));
     }
     res.status(201).json({ task });
 }
@@ -36,7 +40,9 @@ const updateTask = async (req, res) => {
         runValidators: true,
     });
     if(!task) {
-        return next(createTaskError(`Error updating the task. Please try again`, 404));
+        res.status(404);
+        return next(`Error updating the task. Please try again`);
+        // return next(createTaskError(`Error updating the task. Please try again`, 404));
     }
     res.status(200).json({ task });
 }
